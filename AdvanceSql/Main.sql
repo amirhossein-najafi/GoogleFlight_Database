@@ -1,6 +1,6 @@
-//view
+--view
 
-//View for domestic flights for each airline.
+--View for domestic flights for each airline.
 
 create view domestic as
 select * from flights
@@ -19,9 +19,9 @@ group by flight_id
 -- SELECT * FROM same_flights;
 
 
-//materilized view
+--materilized view
 
-//Create a materialized view that show all aircrafts of each airline
+--Create a materialized view that show all aircrafts of each airline
 create materialized view aircraftview as
 select aircrafts.* , airline_id from aircrafts
 join airlines using (aircraft_id)
@@ -39,10 +39,10 @@ group by airport_id,airlines.airline_id
 
 -- select * from airlineview
 
-//function
+--function
 
 
-// Write a function that returns the list of trips by getting a user's ID
+-- Write a function that returns the list of trips by getting a user's ID
 
 Create function trips(u_id int)  
 returns table ( flight_id int ,  destination text,origin text, departure_day timestamp,arrival_day timestamp) 
@@ -62,8 +62,7 @@ $$;
 -- select *from trips(1);
 
 
-//Write a function that by taking the required inputs (aircraft ID and time period) will 
-show all the flights of a plane in a certain period.
+--Write a function that by taking the required inputs (aircraft ID and time period) will show all the flights of a plane in a certain period.
 
 create function get_flights(
     aircraft_id_selected INT,
@@ -121,10 +120,9 @@ $$ LANGUAGE plpgsql;
 -- select * from get_flights_by_origin_destination('Indonesia','Portugal')
 
 
-//trigger
+--trigger
 
-//Write a trigger so that a user who has not booked a flight and whose trip has not 
-ended cannot register feedback about that flight.
+--Write a trigger so that a user who has not booked a flight and whose trip has not ended cannot register feedback about that flight.
 
 CREATE OR REPLACE FUNCTION check_feedback()
 RETURNS TRIGGER AS $$
@@ -170,7 +168,7 @@ insert into feedback (user_id, flight_id, rating) values (62, 51, 1);
 
 
 
-//Write a trigger that a plane cannot make more than one flight in an hour.
+--Write a trigger that a plane cannot make more than one flight in an hour.
 
 create or replace function Check_the_flight_of_each_plane()
 returns trigger as $$
@@ -223,10 +221,9 @@ execute function check_reserved_seat_trigger();
 --test
 insert into Bookings (flight_id, booking_datetime, seat_num) values (47, '2023-07-25 18:29:47', 206);
 
-Stored procedure
+--Stored procedure
 
-//Create a Store Procedure that by getting a user ID and flight ID, add them to 
-a reservation table.
+--Create a Store Procedure that by getting a user ID and flight ID, add them to a reservation table.
 
 create or replace procedure insert_reserve(u_id in integer,f_id in integer ,s_num in integer)
 language 'plpgsql'
@@ -247,7 +244,7 @@ $body$
 
 -- call insert_reserve(5,10,98)
 
- //Create a Store Procedure that insert a new Crew to a flight.
+ --Create a Store Procedure that insert a new Crew to a flight.
 
 create or replace procedure insert_crew(id in integer,first_name in varchar(255),last_name in varchar(255),gender in varchar(255),pos in varchar(255))
 language 'plpgsql'
